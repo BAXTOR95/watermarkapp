@@ -192,7 +192,7 @@ class WatermarkApp:
         file_path = filedialog.askopenfilename()
         if file_path:
             try:
-                self.original_image = Image.open(file_path)
+                self.original_image = Image.open(file_path).convert('RGBA')
                 self.preview_image = self.get_resized_image_for_preview(
                     self.original_image
                 )
@@ -221,7 +221,7 @@ class WatermarkApp:
         """
         logo_path = filedialog.askopenfilename()
         if logo_path and self.original_image:
-            logo_image = Image.open(logo_path)
+            logo_image = Image.open(logo_path).convert('RGBA')
             self.apply_logo_watermark(logo_image)
 
     def apply_text_watermark(self):
@@ -431,7 +431,7 @@ class WatermarkApp:
         self.apply_button = tk.Button(
             button_frame,
             text="Apply Text",
-            command=lambda: self.apply_text_watermark(True),
+            command=self.apply_text_watermark,
         )
         self.apply_button.pack(side='left', fill='x', expand=True, padx=5)
 
